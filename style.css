@@ -330,7 +330,6 @@ section.home {
   align-items: center;
   gap: 3rem;
   flex-wrap: wrap;
-  border: 1px solid white;
 }
 
 .service-box {
