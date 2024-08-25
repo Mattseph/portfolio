@@ -24,6 +24,8 @@ body {
   color: var(--text-color);
 }
 
+/* Navigation */
+
 header {
   position: fixed;
   width: 100%;
@@ -79,6 +81,8 @@ header {
   color: var(--main-color);
   border-bottom: 3px solid var(--main-color);
 }
+
+/* Home Section */
 
 section.container {
   min-height: 100vh;
@@ -199,17 +203,20 @@ section.home {
   box-shadow: 0 0 25px var(--main-color);
 }
 
-.heading {
-  font-size: 6rem;
-  margin: 5rem 0;
-  text-align: center;
-}
+/* Education Section */
 
 .education {
   min-height: 100vh;
   padding: 100px 15%;
   background-color: var(--second-bg-color);
 }
+
+.heading {
+  font-size: 6rem;
+  margin: 5rem 0;
+  text-align: center;
+}
+
 
 .timeline-items {
   position: relative;
@@ -275,7 +282,6 @@ section.home {
   padding: 20px 30px;
   cursor: pointer;
   transition: 0.3s ease-in-out;
-  
 }
 
 .timeline-content:hover {
@@ -310,4 +316,45 @@ section.home {
 ::-webkit-scrollbar-track {
   background-color: var(--bg-color);
   width: 50px;
+}
+
+/* Services Section */
+
+.services {
+  min-height: 100vh;
+  background: var(--bg-color);
+  padding: 100px 15%;
+}
+
+.services-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+  border: 1px solid white;
+}
+
+.service-box {
+  flex-basis: 48%;
+  height: 250px;
+  padding: 30px 50px;
+  border-radius: 2rem;
+  background-color: var(--main-color);
+  transition: 0.3s ease-in-out;
+}
+
+.service-box:hover {
+  transform: scale(1.05);
+  background: var(--text-color);
+  border: 5px solid var(--main-color);
+}
+
+.service-info {
+  color: black;
+}
+
+.service-info h3 {
+  font-size: 3rem;
+  font-weight: 700;
 }
