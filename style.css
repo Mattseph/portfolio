@@ -58,7 +58,7 @@ header {
   transform: scale(1.1);
 }
 
-.logo span {
+span {
   color: var(--main-color);
 }
 
@@ -126,7 +126,6 @@ section.home {
 }
 
 .home-content span {
-  color: var(--main-color);
   font-weight: 600;
 }
 .home-img {
@@ -216,7 +215,6 @@ section.home {
   margin: 5rem 0;
   text-align: center;
 }
-
 
 .timeline-items {
   position: relative;
@@ -357,4 +355,73 @@ section.home {
 .service-info h3 {
   font-size: 3rem;
   font-weight: 700;
+}
+
+/* Contact Section */
+
+.projects {
+  min-height: 100vh;
+  padding: 100px 15%;
+  background-color: var(--second-bg-color);
+}
+
+.projects-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.project-item {
+  height: 500px;
+  flex-basis: 32%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-color);
+  border: 3px solid var(--main-color);
+  border-radius: 2rem;
+  transition: 0.3s ease-in-out;
+  margin-bottom: 1.5rem;
+}
+
+.project-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px var(--main-color);
+}
+
+.project-item img {
+  max-width: 250px;
+  max-height: 250px;
+  border-radius: 1rem;
+  margin-bottom: 2rem;
+}
+
+.project-item .title {
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.project-item .desctiption {
+  font-size: 1.3rem;
+  margin-bottom: 2rem;
+}
+
+.project-item a {
+  color: var(--text-color);
+  border: 3px solid var(--main-color);
+  border-radius: 3rem;
+  padding: 10px 30px;
+  color: var(--text-color);
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+.project-item a:hover {
+  background: var(--main-color);
+  color: black;
+  box-shadow: 0 0 25px var(--main-color);
 }
