@@ -101,7 +101,7 @@ section.home {
 .service-box {
   flex-basis: 100%;
   padding: 15px 25px;
-  height: 300px;
+  height: 310px;
 }
 
 .service-info h3 {
@@ -116,15 +116,16 @@ section.home {
 /* Projects */
 
 .projects {
-  padding: 100px 20%;
+  padding: 100px 10%;
 }
 
-.projects-container {
-  width: 100%;
-}
 
+.project-item {
+  flex-basis: 100%;
+  
+}
 
 .project-item img {
-  max-width: 300px;
-  max-height: 300px;
+  max-width: 100%;
+  height: auto;
 }
