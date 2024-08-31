@@ -7,13 +7,31 @@ header {
 }
 
 #menu-icon {
-  display: flex;
+  display: block;
 }
 
 .navbar {
-  display: none;
+
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 50%;
 }
 
+.navbar .center {
+  display: none;
+  flex-direction: column;
+  border-left: 3px solid var(--main-color);
+  border-bottom: 3px solid var(--main-color);
+  padding: 1rem 2rem;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  border-bottom-left-radius: 2rem;
+}
+
+.center.active {
+  display: flex;
+}
 /* Home */
 
 section.container {
@@ -38,7 +56,6 @@ section.home {
 
 .home-content p {
   font-size: clamp(1rem, 0.9993rem + 1.043vw, 1.5rem);
-  
 }
 
 .home-img img {
@@ -119,10 +136,8 @@ section.home {
   padding: 100px 10%;
 }
 
-
 .project-item {
   flex-basis: 100%;
-  
 }
 
 .project-item img {
