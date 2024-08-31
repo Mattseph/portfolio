@@ -80,30 +80,37 @@ section.home {
 .timeline-items {
   width: 100%;
 }
+
+.timeline-items:before {
+  left: 0;
+}
+
+.timeline-item:nth-child(odd) {
+  padding-right: 0;
+  text-align: left;
+  padding-left: 20px;
+}
+
+.timeline-item:nth-child(even) {
+  padding-left: 20px;
+}
+.timeline-dot {
+  left: -9px;
+}
+
 .timeline-date {
   font-size: clamp(1rem, 0.4872rem + 2.735vw, 1.8rem);
 }
 
-.timeline-item:nth-child(odd) {
-  padding-right: calc(50% + 15px);
-  text-align: right;
-}
-
-.timeline-item:nth-child(even) {
-  padding-left: calc(50% + 15px);
-}
 
 .timeline-content {
   padding: 10px 20px;
 }
 
 .timeline-content p {
-  font-size: 12px;
-}
-
-.timeline-content p.school {
   font-size: 14px;
 }
+
 
 /* Service */
 
