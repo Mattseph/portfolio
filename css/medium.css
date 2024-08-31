@@ -1,0 +1,79 @@
+/* Navigation */
+
+header {
+  padding: 3rem 10%;
+  justify-content: space-between;
+}
+
+.navbar .center {
+  gap: 3rem;
+}
+
+section.container,
+.education,
+.services,
+.projects {
+  padding: 15% 10%;
+}
+
+
+/* Home */
+section.home {
+  gap: 6rem;
+}
+
+.home-content h3 {
+  font-size: 3.6rem;
+}
+
+.home-content h5 {
+  font-size: 2.8rem;
+  margin-bottom: 2rem;
+}
+
+.home-content p {
+  font-size: clamp(1.2rem, 0.8562rem + 0.7154vw, 1.5rem);
+}
+
+.home-content {
+  width: 95%;
+}
+
+.home-img {
+  width: 100%;
+}
+
+.home-img img {
+  width: 100%;
+}
+
+
+/* Education */
+
+.timeline-date {
+  font-size: 2rem;
+}
+
+/* Services */
+.services-container {
+  gap: 2.5rem;
+}
+.service-box {
+  padding: 15px 20px;
+  height: 315px;
+}
+
+.service-info h3 {
+  font-size: clamp(1rem, -2.9rem + 8.125vw, 2.3rem);
+  margin-bottom: 0.5rem;
+}
+
+.service-info p {
+  font-size: 1.5rem
+}
+
+/* Projects */
+
+.project-item {
+  flex-basis: 48%;
+}
