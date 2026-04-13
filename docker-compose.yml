@@ -1,0 +1,170 @@
+#Docker services
+services:
+    web:
+        build: ./
+        container_name: ${CONTAINER_LABEL}_web
+        working_dir: /app
+        volumes:
+            - .:/app
+            - ./storage:/app/storage
+            - ./bootstrap/cache:/app/bootstrap/cache
+            - ./nginx-pwa.conf:/opt/docker/etc/nginx/vhost.common.d/99-pwa.conf:ro
+        environment:
+            - WEB_DOCUMENT_ROOT=/app/public
+            - PHP_DATE_TIMEZONE="Asia/Manila"
+            - PHP_DISPLAY_ERRORS=1
+            - PHP_MEMORY_LIMIT=256M
+            - PHP_MAX_EXECUTION_TIME=120
+            - PHP_POST_MAX_SIZE=50M
+            - PHP_UPLOAD_MAX_FILESIZE=50M
+            - PHP_IDE_CONFIG=serverName=localhost
+            - PHP_DEBUGGER=xdebug
+            - XDEBUG_MODE=coverage
+            - XDEBUG_REMOTE_AUTOSTART=1
+            - XDEBUG_REMOTE_CONNECT_BACK=1
+        ports:
+            - "${WEB_PORT_HTTP}:80"
+            - "${WEB_PORT_SSL}:443"
+            - '5173:5173'
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+        networks:
+            - internal
+            - outside-world
+        depends_on:
+            - mysql
+        healthcheck:
+            test: ["CMD", "curl", "-f", "http://localhost/"]
+            interval: 30s
+            timeout: 10s
+            retries: 3
+            start_period: 40s
+
+    # Queue Worker - processes background jobs
+    queue:
+        build: ./
+        container_name: ${CONTAINER_LABEL}_queue
+        working_dir: /app
+        volumes:
+            - .:/app
+            - ./storage:/app/storage
+        environment:
+            - PHP_DATE_TIMEZONE="Asia/Manila"
+            - PHP_MEMORY_LIMIT=256M
+        entrypoint: ["/usr/local/bin/php"]
+        command: ["artisan", "queue:work", "--sleep=3", "--tries=3", "--max-time=3600"]
+        networks:
+            - internal
+        depends_on:
+            mysql:
+                condition: service_healthy
+            redis:
+                condition: service_healthy
+        restart: unless-stopped
+
+    # Scheduler - runs scheduled tasks
+    # scheduler:
+    #     build: ./
+    #     container_name: ${CONTAINER_LABEL}_scheduler
+    #     working_dir: /app
+    #     volumes:
+    #         - .:/app
+    #         - ./storage:/app/storage
+    #     environment:
+    #         - PHP_DATE_TIMEZONE="Asia/Manila"
+    #     entrypoint: ["/usr/local/bin/php"]
+    #     command: ["artisan", "schedule:work"]
+    #     networks:
+    #         - internal
+    #     depends_on:
+    #         mysql:
+    #             condition: service_healthy
+    #     restart: unless-stopped
+
+    mysql:
+        image: mysql:${MYSQL_VERSION}
+        container_name: ${CONTAINER_LABEL}_db
+        restart: unless-stopped
+        tty: true
+        environment:
+            MYSQL_ROOT_PASSWORD: password
+            MYSQL_DATABASE: ${CONTAINER_LABEL}_db
+        volumes:
+            - ./.docker/mysql/logs:/var/log/mysql
+            - 'mysql-8.3:/var/lib/mysql'
+        command: [
+            'mysqld',
+            '--character-set-server=utf8mb4',
+            '--collation-server=utf8mb4_unicode_ci',
+        ]
+        networks:
+            - internal
+        healthcheck:
+            test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+    redis:
+        image: 'redis:alpine'
+        hostname: redis
+        ports:
+            - '${FORWARD_REDIS_PORT:-6379}:6379'
+        volumes:
+            - 'app-redis:/data'
+        networks:
+            - internal
+        healthcheck:
+            test:
+                - CMD
+                - redis-cli
+                - ping
+            retries: 3
+            timeout: 5s
+        
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin:${PHPMYADMIN_VERSION}
+        container_name: ${CONTAINER_LABEL}_admin
+        restart: always
+        ports:
+            - 8086:80
+        volumes:
+            - ./.docker/phpmyadmin/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini:ro
+        networks:
+            - internal
+        environment:
+            - PMA_HOST=mysql
+            - UPLOAD_LIMIT=512M
+            - MEMORY_LIMIT=1G
+            - MAX_EXECUTION_TIME=600
+
+    # Mailpit - local email testing
+    mailpit:
+        image: axllent/mailpit
+        container_name: ${CONTAINER_LABEL}_mail
+        ports:
+            - '${FORWARD_MAILPIT_PORT:-1025}:1025'
+            - '${FORWARD_MAILPIT_DASHBOARD_PORT:-8025}:8025'
+        networks:
+            - internal
+
+# Docker Nerworks 
+networks:
+
+    # internal network - is *only* on "internal network" cannot talk to WAN
+    internal:
+
+    # add this network to a container to make it talk to the rest of the world
+    outside-world:
+
+# Docker Volumes
+volumes:
+
+    #MySQL external volume
+    mysql-8.3:
+        external: true
+
+    #Redis local folder volume
+    app-redis:
+        driver: local
+

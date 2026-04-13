@@ -7,6 +7,7 @@
 .DS_Store
 
 .superpowers/
+.claude/
 
 node_modules/
 vendor/
