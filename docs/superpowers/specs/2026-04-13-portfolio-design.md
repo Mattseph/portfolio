@@ -25,7 +25,7 @@ A developer portfolio for a Laravel/PHP backend engineer, used to win jobs and o
 **Editorial / Minimal.** Serif display type, sans body, monochrome with a single accent color (color chosen after build; stub with `neutral-900`).
 
 **Typography** (Bunny Fonts — privacy-friendly, no Google calls)
-- Display serif: `Fraunces` or `Instrument Serif`
+- Display serif: `Fraunces`
 - Body sans: `Inter`
 - Mono: `JetBrains Mono` (tags, code, technical labels)
 
@@ -40,7 +40,7 @@ A developer portfolio for a Laravel/PHP backend engineer, used to win jobs and o
 
 - Livewire `wire:navigate` for SPA-feel internal navigation.
 - Scroll-reveal via `IntersectionObserver` (tiny Alpine directive).
-- Hero headline: letter-by-letter or word-by-word fade-in (CSS).
+- Hero headline: word-by-word fade-in on load (CSS keyframes with stagger).
 - Skills marquee: CSS `@keyframes` infinite scroll, pauses on hover.
 - Project card hover: `hover:-translate-y-1 hover:shadow-lg transition`.
 - Theme toggle: smooth color transitions.
@@ -105,7 +105,8 @@ projects
 
 skills
   id, name, category (enum: language|framework|database|tool|platform),
-  icon, proficiency (1-5), sort_order, timestamps
+  icon (devicon class string, e.g. "devicon-laravel-plain"),
+  proficiency (1-5), sort_order, timestamps
 
 experiences
   id, company, role, location,
@@ -142,7 +143,7 @@ about_settings:  bio (rich text), profile_image_path, cv_pdf_path,
 
 **Choices**
 - Slugs on projects — stable URLs even if title changes.
-- Rich text stored as sanitized HTML (Filament TipTap); rendered with `{!! !!}` after sanitize pass.
+- Rich text stored as HTML produced by Filament's TipTap editor (constrained subset); rendered with `{!! !!}` on those fields only.
 - `is_published` on projects and services enables draft-then-publish workflow.
 - `sort_order` everywhere for Filament drag-to-reorder.
 - GitHub cache as a single-row JSON snapshot — display-only; separate repos/commits tables add no value.
@@ -212,8 +213,8 @@ Queue worker already runs in the existing `docker-compose.yml`.
 
 - Single seeded admin; no registration route exposed; Filament login only.
 - GitHub token in `.env` only; never committed.
-- Rich-text sanitized on save and/or render; `{!! !!}` only on sanitized content.
-- File uploads validated (MIME, max size) by Filament; stored under `storage/app/public`; symlinked to `public/storage`.
+- Rich text produced only via Filament's TipTap editor, which emits a constrained HTML subset; rendered with `{!! !!}` on those fields only. No third-party sanitizer needed.
+- File uploads validated by Filament with explicit limits: images (cover, architecture, profile, experience logo) — `jpg|png|webp`, 5 MB max; CV PDF — `pdf`, 10 MB max. Stored under `storage/app/public`; symlinked to `public/storage`.
 - CSRF handled by Livewire automatically.
 - Contact form: honeypot + per-IP rate limit.
 
