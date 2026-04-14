@@ -7,17 +7,18 @@
             <h1 class="text-4xl font-serif mb-6">About</h1>
             <div class="prose dark:prose-invert max-w-none">{!! $about->bio !!}</div>
             @if ($about->cv_pdf_path)
-                <a href="{{ asset('storage/' . $about->cv_pdf_path) }}" class="inline-block mt-6 underline">Download CV (PDF) →</a>
+                <a href="{{ asset('storage/' . $about->cv_pdf_path) }}" class="inline-block mt-6 text-accent dark:text-accent-dark hover:underline">Download CV (PDF) →</a>
             @endif
         </div>
     </section>
 
     <section class="mt-20">
         <h2 class="text-2xl font-serif mb-8">Experience</h2>
-        <ol class="space-y-8 border-l border-neutral-200 dark:border-neutral-800 pl-6">
+        <ol class="space-y-8 border-l-2 border-accent/30 dark:border-accent-dark/30 pl-6">
             @foreach ($experiences as $e)
-                <li>
-                    <div class="text-xs font-mono uppercase text-neutral-500">{{ $e->started_at?->format('Y') }} — {{ $e->ended_at?->format('Y') ?? 'Present' }}</div>
+                <li class="relative">
+                    <span class="absolute -left-[1.5625rem] top-1 w-3 h-3 rounded-full bg-accent dark:bg-accent-dark ring-2 ring-white dark:ring-neutral-950"></span>
+                    <div class="text-xs font-mono uppercase text-accent dark:text-accent-dark">{{ $e->started_at?->format('Y') }} — {{ $e->ended_at?->format('Y') ?? 'Present' }}</div>
                     <h3 class="text-lg font-serif mt-1">{{ $e->role }}, {{ $e->company }}</h3>
                     @if ($e->description) <div class="prose dark:prose-invert max-w-none mt-2">{!! $e->description !!}</div> @endif
                 </li>

@@ -32,7 +32,7 @@
                 <textarea wire:model="message" rows="6" class="w-full px-3 py-2 border border-neutral-300 dark:border-neutral-700 rounded bg-transparent"></textarea>
                 @error('message') <p class="text-red-600 text-xs mt-1">{{ $message }}</p> @enderror
             </div>
-            <button type="submit" class="px-5 py-3 bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-900 rounded hover:opacity-90 transition">Send</button>
+            <button type="submit" class="px-5 py-3 bg-accent text-white dark:bg-accent-dark dark:text-neutral-950 rounded hover:opacity-90 transition">Send</button>
         </form>
     @endif
 </div>

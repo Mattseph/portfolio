@@ -5,18 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $title ?? config('app.name') }}</title>
+    <script>
+        (function () {
+            var stored = localStorage.theme;
+            if (stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+        document.addEventListener('livewire:navigated', function () {
+            var stored = localStorage.theme;
+            if (stored === 'dark') {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+    </script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 </head>
 <body>
     <header class="max-w-5xl mx-auto px-6 py-6 flex items-center justify-between">
-        <a href="/" wire:navigate class="font-serif text-xl font-semibold tracking-tight">{{ config('app.name') }}</a>
+        <a href="/" wire:navigate class="font-serif text-xl font-semibold tracking-tight hover:text-accent dark:hover:text-accent-dark transition-colors">{{ config('app.name') }}</a>
         <nav class="flex items-center gap-6 text-sm">
-            <a href="/" wire:navigate class="hover:underline">Home</a>
-            <a href="/about" wire:navigate class="hover:underline">About</a>
-            <a href="/projects" wire:navigate class="hover:underline">Projects</a>
-            <a href="/services" wire:navigate class="hover:underline">Services</a>
-            <a href="/contact" wire:navigate class="hover:underline">Contact</a>
+            <a href="/" wire:navigate class="hover:text-accent dark:hover:text-accent-dark transition-colors">Home</a>
+            <a href="/about" wire:navigate class="hover:text-accent dark:hover:text-accent-dark transition-colors">About</a>
+            <a href="/projects" wire:navigate class="hover:text-accent dark:hover:text-accent-dark transition-colors">Projects</a>
+            <a href="/services" wire:navigate class="hover:text-accent dark:hover:text-accent-dark transition-colors">Services</a>
+            <a href="/contact" wire:navigate class="hover:text-accent dark:hover:text-accent-dark transition-colors">Contact</a>
             @include('livewire.partials.theme-toggle')
         </nav>
     </header>

@@ -10,6 +10,6 @@
         @endforeach
     </div>
     <div class="mt-12">
-        <a href="/contact" wire:navigate class="inline-block px-5 py-3 bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-900 rounded hover:opacity-90 transition">Start a conversation</a>
+        <a href="/contact" wire:navigate class="inline-block px-5 py-3 bg-accent text-white dark:bg-accent-dark dark:text-neutral-950 rounded hover:opacity-90 transition">Start a conversation</a>
     </div>
 </div>

@@ -10,6 +10,9 @@
     .dark body { @apply bg-neutral-950 text-neutral-100; }
     h1, h2, h3, h4 { @apply font-serif tracking-tight; }
     code, pre, .mono { @apply font-mono; }
+    input:focus, textarea:focus, select:focus {
+        @apply outline-none ring-2 ring-accent dark:ring-accent-dark;
+    }
 }
 
 [x-cloak] { display: none !important; }
@@ -17,7 +20,8 @@
 .marquee { @apply relative w-full; }
 .marquee-track { @apply flex gap-10 whitespace-nowrap; animation: marquee 40s linear infinite; }
 .marquee:hover .marquee-track { animation-play-state: paused; }
-.marquee-item { @apply font-mono text-sm text-neutral-500; }
+.marquee-item { @apply font-mono text-sm text-neutral-400 dark:text-neutral-500; }
+.marquee-item::before { content: '◆'; @apply text-accent dark:text-accent-dark mr-3 text-xs; }
 
 @keyframes marquee {
     from { transform: translateX(0); }
