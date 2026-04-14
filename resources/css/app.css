@@ -13,3 +13,13 @@
 }
 
 [x-cloak] { display: none !important; }
+
+.marquee { @apply relative w-full; }
+.marquee-track { @apply flex gap-10 whitespace-nowrap; animation: marquee 40s linear infinite; }
+.marquee:hover .marquee-track { animation-play-state: paused; }
+.marquee-item { @apply font-mono text-sm text-neutral-500; }
+
+@keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
