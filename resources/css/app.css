@@ -11,3 +11,5 @@
     h1, h2, h3, h4 { @apply font-serif tracking-tight; }
     code, pre, .mono { @apply font-mono; }
 }
+
+[x-cloak] { display: none !important; }
