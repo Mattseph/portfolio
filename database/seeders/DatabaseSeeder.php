@@ -2,22 +2,34 @@
 
 namespace Database\Seeders;
 
+use App\Models\Experience;
+use App\Models\Project;
+use App\Models\Service;
+use App\Models\Skill;
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // User::factory(10)->create();
+        User::updateOrCreate(
+            ['email' => 'admin@example.com'],
+            [
+                'name' => 'Site Admin',
+                'password' => bcrypt('password'),
+                'is_admin' => true,
+            ]
+        );
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        Project::factory()->count(4)->create(['is_featured' => true]);
+        Project::factory()->count(6)->create();
+
+        foreach (['language', 'framework', 'database', 'tool', 'platform'] as $cat) {
+            Skill::factory()->count(3)->create(['category' => $cat]);
+        }
+
+        Experience::factory()->count(3)->create();
+        Service::factory()->count(4)->create();
     }
 }
