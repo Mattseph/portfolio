@@ -63,23 +63,23 @@ services:
         restart: unless-stopped
 
     # Scheduler - runs scheduled tasks
-    # scheduler:
-    #     build: ./
-    #     container_name: ${CONTAINER_LABEL}_scheduler
-    #     working_dir: /app
-    #     volumes:
-    #         - .:/app
-    #         - ./storage:/app/storage
-    #     environment:
-    #         - PHP_DATE_TIMEZONE="Asia/Manila"
-    #     entrypoint: ["/usr/local/bin/php"]
-    #     command: ["artisan", "schedule:work"]
-    #     networks:
-    #         - internal
-    #     depends_on:
-    #         mysql:
-    #             condition: service_healthy
-    #     restart: unless-stopped
+    scheduler:
+        build: ./
+        container_name: ${CONTAINER_LABEL}_scheduler
+        working_dir: /app
+        volumes:
+            - .:/app
+            - ./storage:/app/storage
+        environment:
+            - PHP_DATE_TIMEZONE="Asia/Manila"
+        entrypoint: ["/usr/local/bin/php"]
+        command: ["artisan", "schedule:work"]
+        networks:
+            - internal
+        depends_on:
+            mysql:
+                condition: service_healthy
+        restart: unless-stopped
 
     mysql:
         image: mysql:${MYSQL_VERSION}
