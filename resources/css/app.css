@@ -1,3 +1,13 @@
+@import url('https://fonts.bunny.net/css?family=fraunces:400,500,600|inter:400,500,600,700|jetbrains-mono:400,500&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    html { scroll-behavior: smooth; }
+    body { @apply font-sans bg-white text-neutral-900 antialiased; }
+    .dark body { @apply bg-neutral-950 text-neutral-100; }
+    h1, h2, h3, h4 { @apply font-serif tracking-tight; }
+    code, pre, .mono { @apply font-mono; }
+}
