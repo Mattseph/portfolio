@@ -1,66 +1,101 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Matthew Bilaos — Developer Portfolio
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Personal portfolio site for Matthew Joseph F. Bilaos, PHP/Laravel Developer. Built with Laravel 11, Livewire 3, and Filament v3.
 
-## About Laravel
+## Stack
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+| Layer | Technology |
+|---|---|
+| Backend | Laravel 11, PHP 8.3 |
+| Frontend | Livewire 3, Alpine.js, Tailwind CSS 3 |
+| Admin | Filament v3 (`/admin`) |
+| Database | MySQL 8.3 |
+| Cache / Queue | Redis |
+| Mail (local) | Mailpit |
+| Containerization | Docker |
+| Testing | Pest 2 |
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Public pages** — Home, About, Projects (with tech filter), Services, Contact
+- **Filament admin** — Manage projects, skills, experiences, services, contact messages, and all site settings
+- **GitHub activity** — Hourly job syncs latest activity via `FetchGithubActivity`
+- **Dark mode** — Tailwind `class` strategy, toggled via Alpine.js, persisted to `localStorage`
+- **Contact form** — Livewire with honeypot and per-IP rate limiting (1/min), queued mail dispatch
+- **Settings** — Spatie Laravel Settings for site, home, and about content (no hardcoded copy)
 
-## Learning Laravel
+## Development Setup
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+All commands run inside Docker. Do not run PHP/Artisan directly on the host.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+```bash
+make build       # first-time: build images and start containers
+make up          # start containers
+make down        # stop containers
+make ssh         # shell into web container
+make fresh       # migrate:fresh --seed (resets all data)
+make logs        # tail container logs
+make status      # show container health
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Inside the container (`make ssh`):
 
-## Laravel Sponsors
+```bash
+php artisan <cmd>
+./vendor/bin/pest                          # run all tests
+./vendor/bin/pest --filter ProjectTest     # run a single test class
+./vendor/bin/pint                          # lint PHP
+npm run dev                                # Vite dev server (port 5173)
+npm run build                              # production assets
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Environment
 
-### Premium Partners
+Copy `.env.example` to `.env` and set:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+```env
+SESSION_DRIVER=redis
+CACHE_STORE=redis
+QUEUE_CONNECTION=redis
 
-## Contributing
+GITHUB_TOKEN=your_token_here   # required for GitHub activity sync
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Seeding
 
-## Code of Conduct
+```bash
+make fresh
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Seeds real portfolio data including skills, experiences, services, and projects. Admin login after seeding:
 
-## Security Vulnerabilities
+- **Email:** `matthewjoseph.bilaos@gmail.com`
+- **Password:** `password` — change this after first login
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Testing
 
-## License
+```bash
+make ssh
+./vendor/bin/pest
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Tests live in `tests/Feature/` (pages, admin) and `tests/Unit/` (jobs). The `QUEUE_CONNECTION` is `sync` in the test environment.
+
+## Project Structure
+
+```
+app/
+  Livewire/Pages/      # Full-page Livewire components (public)
+  Livewire/Partials/   # Shared partials (nav, footer, theme toggle)
+  Filament/            # Admin resources, pages, widgets
+  Models/              # Eloquent models
+  Settings/            # Spatie Settings classes (SiteSettings, HomeSettings, AboutSettings)
+  Jobs/                # FetchGithubActivity
+resources/
+  views/livewire/      # Blade views for Livewire components
+  views/layouts/       # Shared app layout
+  css/app.css          # Tailwind entry point
+database/
+  seeders/             # PortfolioDataSeeder (real data)
+  settings/            # Spatie settings migrations
+```
