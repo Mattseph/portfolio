@@ -23,7 +23,8 @@ class ProjectIndex extends Component
 
         $allTags = Project::published()->get()
             ->flatMap(fn ($p) => $p->tech_stack ?? [])
-            ->unique()->sort()->values();
+            ->countBy()->filter(fn ($count) => $count >= 2)
+            ->keys()->sort()->values();
 
         return view('livewire.pages.project-index', [
             'projects' => $projects->get(),

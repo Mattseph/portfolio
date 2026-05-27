@@ -17,9 +17,9 @@ export default {
             },
             colors: {
                 accent: {
-                    DEFAULT: '#4f46e5',  // indigo-600
-                    light: '#eef2ff',    // indigo-50
-                    dark: '#818cf8',     // indigo-400
+                    DEFAULT: '#ea580c',  // orange-600
+                    light: '#fff7ed',    // orange-50
+                    dark: '#fb923c',     // orange-400
                 },
             },
         },
