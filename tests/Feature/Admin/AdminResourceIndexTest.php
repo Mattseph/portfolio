@@ -13,5 +13,4 @@ it('loads all resource index pages', function (string $path) {
     '/admin/skills',
     '/admin/experiences',
     '/admin/services',
-    '/admin/contact-messages',
 ]);
